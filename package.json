@@ -2,6 +2,11 @@
   "name": "compare-css",
   "version": "1.0.0",
   "description": "Tests whether two pieces of CSS text are equivalent in browser",
+  "keywords": [
+    "css",
+    "compare",
+    "equivalent"
+  ],
   "browser": "index.js",
   "husky": {
     "hooks": {
@@ -18,9 +23,20 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
   "author": "Akash Srivastava <akash.srivastava.1911@gmail.com>",
-  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/akashdotsrivastava/compare-css.git"
+  },
+  "bugs": {
+    "url": "https://github.com/akashdotsrivastava/compare-css/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/akashdotsrivastava/compare-css/blob/main/LICENSE.md"
+    }
+  ],
   "dependencies": {
     "ramda": "^0.28.0"
   },
