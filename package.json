@@ -5,7 +5,8 @@
   "keywords": [
     "css",
     "compare",
-    "equivalent"
+    "equivalent",
+    "compare css"
   ],
   "browser": "index.js",
   "husky": {
@@ -37,6 +38,7 @@
       "url": "https://github.com/akashdotsrivastava/compare-css/blob/main/LICENSE.md"
     }
   ],
+  "license": "MIT",
   "dependencies": {
     "ramda": "^0.28.0"
   },
