@@ -1,6 +1,6 @@
 {
   "name": "compare-css",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Tests whether two pieces of CSS text are equivalent in browser",
   "keywords": [
     "css",
