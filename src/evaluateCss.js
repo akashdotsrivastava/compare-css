@@ -1,19 +1,19 @@
 import { any, all } from "ramda";
 
-const styleRulesList = rule => {
+const styleRulesList = (rule) => {
   const ruleStyles = rule.style;
   const { cssText } = ruleStyles;
   const cssRulesMarkedImportant = cssText
     .split(";")
-    .filter(propName => propName.includes("!important"))
-    .map(broadPropName => broadPropName.split(":")[0].trim().split("-"));
+    .filter((propName) => propName.includes("!important"))
+    .map((broadPropName) => broadPropName.split(":")[0].trim().split("-"));
 
-  const isImportant = propName => {
+  const isImportant = (propName) => {
     const propNameBreakdown = propName.split("-");
     return any(
-      importantRuleBreakDown =>
+      (importantRuleBreakDown) =>
         importantRuleBreakDown[0] === propNameBreakdown[0] &&
-        all(propChunk => propNameBreakdown.includes(propChunk))(
+        all((propChunk) => propNameBreakdown.includes(propChunk))(
           importantRuleBreakDown
         )
     )(cssRulesMarkedImportant);
@@ -29,19 +29,23 @@ const styleRulesList = rule => {
   return rulesList;
 };
 
-const evaluateCSS = cssCode => {
+const getNewDocument = () => {
+  return document.implementation.createHTMLDocument("");
+};
+
+const evaluateCSS = (cssCode) => {
   const styleList = {};
   let error = false;
   try {
-    const doc = document.implementation.createHTMLDocument("");
+    const doc = getNewDocument();
     const styleElement = document.createElement("style");
     styleElement.textContent = cssCode;
-    doc.body.appendChild(styleElement);
+    doc.head.appendChild(styleElement);
 
     for (const rule of Array.from(styleElement.sheet.cssRules)) {
       switch (rule.type) {
         case 1: // CSSStyleRule
-          rule.selectorText.split(",").forEach(individualSelector => {
+          rule.selectorText.split(",").forEach((individualSelector) => {
             styleList[individualSelector.trim()] = {
               ...(styleList[individualSelector.trim()] || {}),
               ...styleRulesList(rule),
@@ -51,16 +55,18 @@ const evaluateCSS = cssCode => {
         case 4: //CSSMediaRule
           styleList[`media: ${rule.conditionText}`] = {};
           for (const mediaCssRule of Array.from(rule.cssRules)) {
-            mediaCssRule.selectorText.split(",").forEach(individualSelector => {
-              styleList[`media: ${rule.conditionText}`][
-                individualSelector.trim()
-              ] = {
-                ...(styleList[`media: ${rule.conditionText}`][
+            mediaCssRule.selectorText
+              .split(",")
+              .forEach((individualSelector) => {
+                styleList[`media: ${rule.conditionText}`][
                   individualSelector.trim()
-                ] || {}),
-                ...styleRulesList(mediaCssRule),
-              };
-            });
+                ] = {
+                  ...(styleList[`media: ${rule.conditionText}`][
+                    individualSelector.trim()
+                  ] || {}),
+                  ...styleRulesList(mediaCssRule),
+                };
+              });
           }
           break;
         default:

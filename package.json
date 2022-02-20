@@ -21,9 +21,6 @@
       "git add"
     ]
   },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "author": "Akash Srivastava <akash.srivastava.1911@gmail.com>",
   "repository": {
     "type": "git",
